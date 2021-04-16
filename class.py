@@ -35,7 +35,7 @@ def web_scraping_bot(url):
         for item in tag_item:
             book = []
             book.append(item.find("img")["alt"])
-            [isbn, price] = getISBN_Price(item.find("a")["href"])
+            [isbn, price] = get_ISBN_Price(item.find("a")["href"])
             book.append(isbn)
             book.append(price)
             print(book)
