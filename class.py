@@ -44,8 +44,22 @@ def web_scraping_bot(url):
 
 def get_ISBN_Price(url):
     url1 = "http:" + url
-    print(url1)
-    print(url1 , "1000")
+    soup = parse_html(get_resource(url1))
+    isbnStr = ""
+    if soup != None:
+        bd = soup.find(class_="bd")
+        liList = bd.find_all("li")
+        print("liList \n", liList)
+        price = 0
+        priceU1 = soup.find('ul', {'class': 'price'})
+        for liData in liList:
+            print("liData\n\n", liData.text)
+            if "ISBN" in liData.text:
+                isbnStr = liData.text[5:]
+        price = priceU1.find('li').text[3:-1]
+        return [isbnStr, price]
+    else:
+        return [None, None]
 
 if (__name__ == "__main__"):
     if len(sys.argv)>1:
